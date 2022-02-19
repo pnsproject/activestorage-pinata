@@ -65,6 +65,14 @@ module ActiveStorage
       end
     end
 
+    # todo jwt is not change, so do not use this
+    def headers_for_direct_upload(key, content_type:, checksum:, content_length:, **)
+      auth = "Bearer #{@jwt}"
+      {
+        'Authorization' => auth
+      }
+    end
+
     private
     def find_blob(key)
       Blob.find_by_key key
