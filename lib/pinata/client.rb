@@ -22,7 +22,7 @@ module Pinata
 
     def add(path)
       res = RestClient.post(
-        @api_endpoint,
+        "#{@api_endpoint}/pinning/pinFileToIPFS",
         { file: File.new(path, 'rb') },
 	      { 'pinata_api_key' => @pinata_api_key, 'pinata_secret_api_key' => @pinata_secret_api_key }
       )
@@ -37,6 +37,10 @@ module Pinata
     def cat(hash, offset, length)
       res = @http_client.get("#{@api_endpoint}/api/v0/cat?arg#{hash}&offset=#{offset}&length=#{length}")
       res.body
+    end
+
+    def delete(hash)
+
     end
 
     def download(hash, &block)

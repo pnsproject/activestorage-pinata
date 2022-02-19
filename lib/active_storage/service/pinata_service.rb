@@ -41,6 +41,12 @@ module ActiveStorage
       end
     end
 
+    def delete(key)
+      instrument :delete, key: key do
+        @client.delete(path_for(key))
+      end
+    end
+
     def download_chunk(key, range)
       instrument :download_chunk, key: key, range: range do
         @client.cat key, range.begin, range.size
