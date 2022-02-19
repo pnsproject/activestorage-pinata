@@ -34,6 +34,8 @@ pinata:
   service: Pinata
   api_endpoint: https://api.pinata.cloud/pinning/pinFileToIPFS
   gateway_endpoint: https://gateway.pinata.cloud/ipfs/
+  pinata_api_key:
+  pinata_secret_api_key:
 ```
 
 ## Development

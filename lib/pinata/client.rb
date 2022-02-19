@@ -21,9 +21,11 @@ module Pinata
     end
 
     def add(path)
-      res = RestClient.post "#{@api_endpoint}",
-        { file: File.new(path,"rb") },
-	{ "pinata_api_key" => @pinata_api_key, "pinata_secret_api_key" => @pinata_secret_api_key }
+      res = RestClient.post(
+        @api_endpoint,
+        { file: File.new(path, 'rb') },
+	      { 'pinata_api_key' => @pinata_api_key, 'pinata_secret_api_key' => @pinata_secret_api_key }
+      )
 
       if res.code >= 200 && res.code <= 299
         JSON.parse(res.body)

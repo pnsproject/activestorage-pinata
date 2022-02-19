@@ -20,7 +20,7 @@ module ActiveStorage
           existing_blob = find_blob(cid_key)
           new_blob = find_blob(key)
           attachment = Attachment.last
-          
+
           attachment.update blob_id: existing_blob.id
           new_blob.destroy!
         else
@@ -66,7 +66,6 @@ module ActiveStorage
     end
 
     private
-
     def find_blob(key)
       Blob.find_by_key key
     end
