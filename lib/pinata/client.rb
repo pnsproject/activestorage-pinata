@@ -46,16 +46,15 @@ module Pinata
       res = HTTPX.get(url)
 
       if block_given?
-        res.return!(&block)
+        res.body.each(&block)
       else
-        res.return!
+        res.body
       end
     end
 
     def file_exists?(key)
-      url = build_file_url(key)
       res = HTTPX.get "#{@gateway_endpoint}#{key}"
-      res.code == 200
+      res.status == 200
     end
 
     def build_file_url(hash)
