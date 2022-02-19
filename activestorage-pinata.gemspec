@@ -1,19 +1,17 @@
 require_relative 'lib/active_storage/service/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "activestorage-pinata"
-  spec.version       = ActiveStorage::PinataService::VERSION
-  spec.authors       = ["John Callahan", "Carl Tanner"]
-  spec.email         = ["jcallahan@acm.org", "carl@wdwhub.net"]
+  spec.name = 'activestorage-pinata'
+  spec.version = ActiveStorage::PinataService::VERSION
+  spec.authors = ["John Callahan", "Carl Tanner"]
+  spec.email = ["jcallahan@acm.org", "carl@wdwhub.net"]
 
-  spec.summary       = ""
-  spec.description   = "An ActiveStorage Service"
-  spec.homepage      = "http://github.com/captproton/activestorage-pinata"
-  spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
+  spec.summary = ""
+  spec.description = "An ActiveStorage Service"
+  spec.homepage = "http://github.com/captproton/activestorage-pinata"
+  spec.license = "MIT"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "http://github.com/captproton/activestorage-pinata"
   spec.metadata["changelog_uri"] = "http://github.com/captproton/activestorage-pinata"

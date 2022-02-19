@@ -1,33 +1,31 @@
 # frozen_string_literal: true
 
-require 'http'
+require 'httpx'
 require 'json'
 require 'logger'
-require 'rest-client'
 
 module Pinata
   class Error < StandardError; end
   class NotFoundError < Error; end
 
   class Client
-    attr_reader :api_endpoint, :gateway_endpoint, :http_client
+    attr_reader :api_endpoint, :gateway_endpoint
 
     def initialize(pinata_api_key, pinata_secret_api_key, api_endpoint, gateway_endpoint)
       @pinata_api_key = pinata_api_key
       @pinata_secret_api_key = pinata_secret_api_key
       @api_endpoint = api_endpoint
       @gateway_endpoint = gateway_endpoint
-      @http_client = HTTP
     end
 
     def add(path)
-      res = RestClient.post(
+      res = HTTPX.plugin(:multipart).post(
         "#{@api_endpoint}/pinning/pinFileToIPFS",
-        { file: File.new(path, 'rb') },
-	      { 'pinata_api_key' => @pinata_api_key, 'pinata_secret_api_key' => @pinata_secret_api_key }
+        form: { file: File.new(path, 'rb') },
+        headers: { 'pinata_api_key' => @pinata_api_key, 'pinata_secret_api_key' => @pinata_secret_api_key }
       )
 
-      if res.code >= 200 && res.code <= 299
+      if res.status >= 200 && res.status < 300
         JSON.parse(res.body)
       else
         raise Error, res.body
@@ -35,7 +33,7 @@ module Pinata
     end
 
     def cat(hash, offset, length)
-      res = @http_client.get("#{@api_endpoint}/api/v0/cat?arg#{hash}&offset=#{offset}&length=#{length}")
+      res = HTTPX.get("#{@api_endpoint}/api/v0/cat?arg#{hash}&offset=#{offset}&length=#{length}")
       res.body
     end
 
@@ -45,7 +43,7 @@ module Pinata
 
     def download(hash, &block)
       url = build_file_url(hash)
-      res = RestClient.get(url)
+      res = HTTPX.get(url)
 
       if block_given?
         res.return!(&block)
@@ -56,7 +54,7 @@ module Pinata
 
     def file_exists?(key)
       url = build_file_url(key)
-      res = RestClient.get "#{@gateway_endpoint}#{key}"
+      res = HTTPX.get "#{@gateway_endpoint}#{key}"
       res.code == 200
     end
 
