@@ -59,7 +59,7 @@ module ActiveStorage
       end
     end
 
-    def url_for_direct_upload(key, expires_in: nil, content_type: nil, content_length: nil, checksum: nil)
+    def url_for_direct_upload(key, expires_in: nil, content_type: nil, content_length: nil, checksum: nil, custom_metadata: {})
       instrument :url_for_direct_upload, key: key do
         "#{@client.api_endpoint}/api/v0/add"
       end
